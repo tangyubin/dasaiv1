@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping
+	PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Hibernate映射文件的根元素 -->
+<hibernate-mapping package="com.dasai.domain"><!--   -->
+	<class name="User"	table="user_table">
+		<!-- 映射标识属性 -->
+		<id	name="id" type="integer" column="user_id">
+			<!-- 指定使用native主键生成策略 -->
+			<generator class="native"/>
+		</id>
+		<!-- 映射普通属性 -->
+		<property name="username" column="username" type="string"
+			not-null="true" length="50" unique="true"/>
+		<property name="password" column="password" type="string"
+			not-null="true" length="50"/>
+		<property name="email" column="email" type="string"
+			not-null="true" length="50" unique="true"/>
+		<property name="emailCheckback" column="email_checkback" type="boolean"
+			not-null="true"/>
+		<set name="receivedMessage" inverse="true">
+			<key column="user_id"/>
+			<one-to-many class="Message"/>
+		</set>
+		<set name="sentMessage" inverse="true">
+			<key column="from_user_id"/>
+			<one-to-many class="Message"/>
+		</set>
+		<set name="works" inverse="true" lazy="true">
+			<key column="to_user_id"/>
+			<one-to-many class="Work"/>
+		</set>
+		
+		<!-- 映射User的子类Admin -->
+		<joined-subclass name="Admin" table="admin_table">
+			<key column="admin_id"/>
+			<!-- 映射Admin的普通属性 -->
+			<property name="name" column="real_name"
+				type="string" length="50"/>
+			<property name="college" column="college"
+				type="string" length="50"/>
+			<property name="grade" column="grade"
+				type="string" length="50"/>
+			<property name="studentId" column="sudent_id"
+				type="string" length="50"/>
+			<property name="tel" column="tel"
+				type="string" length="50"/>
+		</joined-subclass>
+		<!-- 映射User的子类Student -->
+		<joined-subclass name="Student" table="student_table">
+			<key column="student_id"/>
+			<property name="tel" column="tel"
+				type="string" length="50"/>
+			<property name="name" column="real_name"
+				type="string" length="50"/>
+			<property name="college" column="college"
+				type="string" length="50"/>
+			<property name="grade" column="grade"
+				type="string" length="50"/>
+			<property name="studentId" column="student_no"
+				type="string" length="50"/>
+			<property name="bankCardId" column="bank_card_id"
+				type="string" length="50"/>
+			<property name="experienceText" column="experience_text"
+				type="string" length="50"/>
+			<property name="otherInfo" column="other_info"
+				type="string" length="50"/>
+			<many-to-one name="team" column="team_id"
+				class="Team" lazy="false"/>
+		</joined-subclass>
+		<!-- 映射User的子类Teacher -->
+		<joined-subclass name="Teacher" table="teacher_table">
+			<key column="teacher_id"/>
+			<property name="workUnit" column="work_unit"
+				type="string" length="50"/>
+			<property name="name" column="real_name"
+				type="string" length="50"/>
+			<property name="position" column="position"
+				type="string" length="50"/>
+			<property name="jobId" column="job_id"
+				type="string" length="50"/>
+			<property name="bankCardId" column="bank_card_id"
+				type="string" length="50"/>
+			<property name="tel" column="tel"
+				type="string" length="50"/>
+			<set name="marks" inverse="true">
+				<key column="teacher_id"/>
+				<one-to-many class="Mark"/>
+			</set>
+		</joined-subclass>
+		<!-- 映射User的子类Team -->
+		<joined-subclass name="Team" table="team_table">
+			<key column="team_id"/>
+			<property name="teamName" column="team_name"
+				type="string" length="50"/>
+			<property name="projectName" column="project_name"
+				type="string" length="50"/>
+			<property name="projectDesc" column="project_desc"
+				type="string" length="50"/>
+			<property name="checkBack" column="check_back"
+				type="boolean" length="50"/>
+			<set name="members" inverse="true">
+				<key column="team_id"/>
+				<one-to-many class="Student"/>
+			</set>
+		</joined-subclass>
+	</class>
+</hibernate-mapping>

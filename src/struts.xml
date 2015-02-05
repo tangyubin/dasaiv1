@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<!-- Struts2配置文件的根元素 -->
+<struts>
+	<!-- 配置了系列常量 -->
+	<constant name="struts.custom.i18n.resources" value="resource"/>
+	<constant name="struts.i18n.encoding" value="UTF-8"/>
+	<package name="default" extends="struts-default,json-default">
+		<!-- 定义全局Result映射 -->
+		<global-results>
+			<!-- 定义sql、root两个异常对应的视图页 -->
+			<result name="business">/WEB-INF/jsp/error.jsp</result>
+			<result name="root">/WEB-INF/jsp/error.jsp</result>
+			<!-- 定义login逻辑视图对应的视图资源 -->
+			<result name="login">/WEB-INF/jsp/login.jsp</result>
+		</global-results>
+
+		<!-- 定义全局异常映射 -->
+		<global-exception-mappings>
+			<!-- 当Action中遇到HrException异常时，
+				系统将转入name为business的结果中 -->
+			<exception-mapping 
+				exception="com.dasai.exception.DasaiException"
+				result="business"/>
+			<!-- 当Action中遇到Exception异常时，
+				系统将转入name为root的结果中 -->
+			<exception-mapping exception="java.lang.Exception" 
+				result="root"/>
+		</global-exception-mappings>
+
+<!--============================下面是登录注册相关的Action========================-->
+		
+		<!-- 定义处理登录系统的Action -->
+		<action name="login"
+			class="com.dasai.action.LoginAction">
+			<result name="input">/WEB-INF/jsp/login.jsp</result>
+			<result name="fail">/WEB-INF/jsp/login.jsp</result>
+			<result name="admin">/WEB-INF/jsp/admin/index.jsp</result>
+			<result name="teacher">/WEB-INF/jsp/teacher/index.jsp</result>
+			<result name="team">/WEB-INF/jsp/team/index.jsp</result>
+			<result name="student">/WEB-INF/jsp/student/index.jsp</result>
+		</action>
+		<!-- 定义处理注册的Action -->
+		<action name="regist"
+			class="com.dasai.action.RegistAction">
+			<result name="input">/WEB-INF/jsp/regist.jsp</result>
+			<result name="fail">/WEB-INF/jsp/regist.jsp</result>
+			<result name="admin">/WEB-INF/jsp/admin/index.jsp</result>
+			<result name="teacher">/WEB-INF/jsp/teacher/index.jsp</result>
+			<result name="team">/WEB-INF/jsp/team/index.jsp</result>
+			<result name="student">/WEB-INF/jsp/student/index.jsp</result>
+		</action>
+		<!-- 定义注册时用到的异步验证用户名的action -->
+		<action name="validUsername" class="com.dasai.action.RegistAction" method="validUsername">
+			<result name="success" type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		<!-- 定义注册时用到的异步验证邮箱的action -->
+		<action name="validEmail" class="com.dasai.action.RegistAction" method="validEmail">
+			<result name="success" type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+	</package>
+</struts>

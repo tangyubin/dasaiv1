@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping
+	PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Hibernate映射文件的根元素 -->
+<hibernate-mapping package="com.dasai.domain"> <!-- package="org.dasai.domain" -->
+	<class	name="Message"	table="message_table">
+		<!-- 映射标识属性 -->
+		<id	name="id" type="integer" column="message_id">
+			<!-- 指定使用native主键生成策略 -->
+			<generator class="native"/>
+		</id>
+		<!-- 映射普通属性 -->
+		<property name="content" column="content" type="string"
+			length="50"/>
+		<property name="isReaded" column="is_readed" type="boolean"/>
+		<many-to-one name="from" column="from_user_id"
+			class="User" lazy="false"/>
+		<many-to-one name="to" column="to_user_id"
+			class="User" lazy="false"/>
+	</class>
+</hibernate-mapping>
