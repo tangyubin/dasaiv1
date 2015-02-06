@@ -8,6 +8,17 @@
 	<constant name="struts.custom.i18n.resources" value="resource"/>
 	<constant name="struts.i18n.encoding" value="UTF-8"/>
 	<package name="default" extends="struts-default,json-default">
+	<!-- ============================配置拦截器============================================== -->
+		<interceptors>
+			<interceptor name="studentAuth" 
+				class="com.dasai.action.authority.StudentAuthorityInterceptor"/>
+			<interceptor name="adminAuth" 
+				class="com.dasai.action.authority.AdminAuthorityInterceptor"/>
+			<interceptor name="teacherAuth" 
+				class="com.dasai.action.authority.TeacherAuthorityInterceptor"/>
+			<interceptor name="teamAuth" 
+				class="com.dasai.action.authority.TeamAuthorityInterceptor"/>
+		</interceptors>
 		<!-- 定义全局Result映射 -->
 		<global-results>
 			<!-- 定义sql、root两个异常对应的视图页 -->
@@ -30,6 +41,7 @@
 				result="root"/>
 		</global-exception-mappings>
 
+		
 <!--============================下面是登录注册相关的Action========================-->
 		
 		<!-- 定义处理登录系统的Action -->
@@ -63,6 +75,50 @@
 			<result name="success" type="json">
 				<param name="root">dataMap</param>
 			</result>
+		</action>
+		<action name="student" class="com.dasai.action.StudentAction">
+			<interceptor-ref name="basicStack"/>
+			<interceptor-ref name="studentAuth"/>
+			<result name="success">/WEB-INF/jsp/student/index.jsp</result>
+		</action>
+		<action name="teacher" class="com.dasai.action.TeacherAction">
+			<interceptor-ref name="basicStack"/>
+			<interceptor-ref name="teacherAuth"/>
+			<result name="success">/WEB-INF/jsp/teacher/index.jsp</result>
+		</action>
+		<action name="team" class="com.dasai.action.TeamAction">
+			<interceptor-ref name="basicStack"/>
+			<interceptor-ref name="teamAuth"/>
+			<result name="success">/WEB-INF/jsp/team/index.jsp</result>
+		</action>
+		<action name="admin" class="com.dasai.action.AdminAction">
+			<interceptor-ref name="basicStack"/>
+			<interceptor-ref name="adminAuth"/>
+			<result name="success">/WEB-INF/jsp/admin/index.jsp</result>
+		</action>
+	</package>
+<!-- ===========================与Student用户相关的Action========================================= -->
+	<package name="student" namespace="/student" extends="struts-default,json-default">
+		<action name="submitWork" class="com.dasai.action.StudentAction" method="submitWork">
+			<!-- 配置fileUpload的拦截器 -->
+			<interceptor-ref name="fileUpload">
+				<!-- 配置允许上传的文件类型 -->
+				<param name="allowedTypes">
+					image/bmp,image/png,image/gif,image/jpeg,zip,doc,rar
+				</param>
+				<!-- 配置允许上传的文件大小 -->
+				<param name="maximumSize">300000</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"/>
+			<!-- 动态设置Action的属性值 -->
+			<param name="savePath">/WEB-INF/upload</param>
+			<!-- <result name="success" type="json">
+				<param name="root">dataMap</param>
+			</result> -->
+			<result name="success">
+				index.jsp
+			</result>
+			<result name="input">/WEB-INF/jsp/error.jsp</result>
 		</action>
 	</package>
 </struts>

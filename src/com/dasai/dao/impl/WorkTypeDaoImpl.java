@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.dasai.dao.WorkTypeDao;
 import com.dasai.dao.base.TangYuBinHibernateDaoSupport;
+import com.dasai.domain.Student;
 import com.dasai.domain.WorkType;
 
 public class WorkTypeDaoImpl extends TangYuBinHibernateDaoSupport implements
@@ -39,5 +40,11 @@ public class WorkTypeDaoImpl extends TangYuBinHibernateDaoSupport implements
 	@Override
 	public List<WorkType> findAll() {
 		return (List<WorkType>)getHibernateTemplate().find("from WorkType");
+	}
+
+	@Override
+	public List<WorkType> findByName(String name) {
+		return (List<WorkType>)getHibernateTemplate()
+				.find("from WorkType where name = ?", new String[] {name});
 	}
 }

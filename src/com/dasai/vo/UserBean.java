@@ -14,17 +14,17 @@ public class UserBean {
 	 */
 	public static final int USER_TYPE_STUDENT = 0;
 	public static final int USER_TYPE_TEAM = 1;
+	public static final int USER_TYPE_TEACHER = 2;
+	public static final int USER_TYPE_ADMIN = 3;
+	
 	private String username;
 	private String password;
 	private String email;
 	/**
 	 * 用户类型
 	 */
-	private String userType;
+	private int userType;
 	
-	/**
-	 * 
-	 */
 	public UserBean() {
 		
 	}
@@ -32,7 +32,11 @@ public class UserBean {
 		this.username = username;
 		this.password = password;
 		this.email = email;
-		this.userType = userType;
+		if(userType.equals("学生")) {
+			this.userType = USER_TYPE_STUDENT;
+		}else {
+			this.userType = USER_TYPE_TEAM;
+		}
 	}
 	public String getUsername() {
 		return username;
@@ -52,18 +56,17 @@ public class UserBean {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	/**
-	 * 得到用户类型，注意这里不是简单的getter函数，而是对将把表示用户类型的字符串转换成了整数，以便将来需求变化时好改代码
-	 * @return 表示用户类型的整型常量
-	 */
 	public int getUserType() {
-		if(this.userType.equals("学生")) {
-			return USER_TYPE_STUDENT;
-		}else {
-			return USER_TYPE_TEAM;
-		}
+		return userType;
+	}
+	public void setUserType(int userType) {
+		this.userType = userType;
 	}
 	public void setUserType(String userType) {
-		this.userType = userType;
+		if(userType.equals("学生")) {
+			this.userType = USER_TYPE_STUDENT;
+		}else {
+			this.userType = USER_TYPE_TEAM;
+		}
 	}
 }

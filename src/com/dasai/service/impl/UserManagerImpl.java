@@ -1,5 +1,7 @@
 package com.dasai.service.impl;
 
+import java.util.List;
+
 import com.dasai.dao.AdminDao;
 import com.dasai.dao.MarkDao;
 import com.dasai.dao.MessageDao;
@@ -9,7 +11,9 @@ import com.dasai.dao.TeamDao;
 import com.dasai.dao.UserDao;
 import com.dasai.dao.WorkDao;
 import com.dasai.dao.WorkTypeDao;
+import com.dasai.domain.Admin;
 import com.dasai.domain.Student;
+import com.dasai.domain.Teacher;
 import com.dasai.domain.Team;
 import com.dasai.service.UserManager;
 import com.dasai.vo.UserBean;
@@ -99,69 +103,94 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public int validLogin(String usernameOrEmail, String password) {
-		if(userDao.findByUsernameAndPassword(usernameOrEmail, password).size() >= 1) {
-			return this.validUsername(usernameOrEmail);
-		}else if(userDao.findByEmailAndPassword(usernameOrEmail, password).size() >= 1) {
-			return this.validEmail(usernameOrEmail);
-		}else {
-			return LOGIN_FAIL;
-		}
+	public boolean validUsername(String username) {
+		return userDao.findByUsername(username).size() == 0;
 	}
 
 	@Override
-	public int validUsername(String username) {
-		if(studentDao.findByUsername(username).size() >= 1) {
-			return USER_TYPE_STUDENT;
-		}else if(teamDao.findByUsername(username).size() >= 1) {
-			return USER_TYPE_TEAM;
-		}else if(teacherDao.findByUsername(username).size() >= 1) {
-			return USER_TYPE_TEACHER;
-		}else if(adminDao.findByUsername(username).size() >= 1) {
-			return USER_TYPE_ADMIN;
-		}else {
-			return NOT_FOUND;
-		}
+	public boolean validEmail(String email) {
+		return userDao.findByEmail(email).size() == 0;
 	}
 
 	@Override
-	public int validEmail(String email) {
-		if(studentDao.findByEmail(email).size() >= 1) {
-			return USER_TYPE_STUDENT;
-		}else if(teamDao.findByEmail(email).size() >= 1) {
-			return USER_TYPE_TEAM;
-		}else if(teacherDao.findByEmail(email).size() >= 1) {
-			return USER_TYPE_TEACHER;
-		}else if(adminDao.findByEmail(email).size() >= 1) {
-			return USER_TYPE_ADMIN;
+	public UserBean getUserBean(String usernameOrEmail, String password) {
+		UserBean userBean = getUserBeanByUsernameAndPassword(usernameOrEmail, password);
+		if(userBean != null) {
+			return userBean;
 		}else {
-			return NOT_FOUND;
+			return getUserBeanByEmailAndPassword(usernameOrEmail, password);
 		}
 	}
-
+	public UserBean getUserBeanByEmailAndPassword(String email, String password) {
+		UserBean userBean = new UserBean();
+		List list = studentDao.findByEmailAndPassword(email, password);
+		if(list.size() >= 0) {
+			Student student = (Student)list.get(0);
+			userBean.setUsername(student.getUsername());
+			userBean.setUserType(UserBean.USER_TYPE_STUDENT);
+			return userBean;
+		}
+		list = teamDao.findByEmailAndPassword(email, password);
+		if(list.size() >= 0) {
+			Team team = (Team)list.get(0);
+			userBean.setUsername(team.getUsername());
+			userBean.setUserType(UserBean.USER_TYPE_TEAM);
+			return userBean;
+		}
+		list = teacherDao.findByEmailAndPassword(email, password);
+		if(list.size() >= 0) {
+			Teacher teacher = (Teacher)list.get(0);
+			userBean.setUsername(teacher.getUsername());
+			userBean.setUserType(UserBean.USER_TYPE_TEACHER);
+			return userBean;
+		}
+		list = adminDao.findByEmailAndPassword(email, password);
+		if(list.size() >= 0) {
+			Admin admin = (Admin)list.get(0);
+			userBean.setUsername(admin.getUsername());
+			userBean.setUserType(UserBean.USER_TYPE_ADMIN);
+			return userBean;
+		}
+		return null;
+	}
+	public UserBean getUserBeanByUsernameAndPassword(String username, String password) {
+		UserBean userBean = new UserBean();
+		List list = studentDao.findByUsernameAndPassword(username, password);
+		if(list.size() >= 0) {
+			Student student = (Student)list.get(0);
+			userBean.setUsername(student.getUsername());
+			userBean.setUserType(UserBean.USER_TYPE_STUDENT);
+			return userBean;
+		}
+		list = teamDao.findByUsernameAndPassword(username, password);
+		if(list.size() >= 0) {
+			Team team = (Team)list.get(0);
+			userBean.setUsername(team.getUsername());
+			userBean.setUserType(UserBean.USER_TYPE_TEAM);
+			return userBean;
+		}
+		list = teacherDao.findByUsernameAndPassword(username, password);
+		if(list.size() >= 0) {
+			Teacher teacher = (Teacher)list.get(0);
+			userBean.setUsername(teacher.getUsername());
+			userBean.setUserType(UserBean.USER_TYPE_TEACHER);
+			return userBean;
+		}
+		list = adminDao.findByUsernameAndPassword(username, password);
+		if(list.size() >= 0) {
+			Admin admin = (Admin)list.get(0);
+			userBean.setUsername(admin.getUsername());
+			userBean.setUserType(UserBean.USER_TYPE_ADMIN);
+			return userBean;
+		}
+		return null;
+	}
 	@Override
-	public int validRegist(UserBean user) {
-		if(this.validUsername(user.getUsername()) != 0 
-				|| this.validEmail(user.getEmail()) != 0) {
-			return REGIST_FAIL;
+	public boolean validRegist(UserBean userBean) {
+		if(validUsername(userBean.getUsername()) && validEmail(userBean.getEmail())) {
+			return true;
 		}else {
-			if(user.getUserType() == UserBean.USER_TYPE_STUDENT) {
-				Student student = new Student();
-				student.setUsername(user.getUsername());
-				student.setPassword(user.getPassword());
-				student.setEmail(user.getEmail());
-				student.setEmailCheckback(false);
-				studentDao.save(student);
-				return USER_TYPE_STUDENT;
-			}else {
-				Team team = new Team();
-				team.setUsername(user.getUsername());
-				team.setPassword(user.getPassword());
-				team.setEmail(user.getEmail());
-				team.setEmailCheckback(false);
-				teamDao.save(team);
-				return USER_TYPE_TEAM;
-			}
+			return false;
 		}
 	}
 }

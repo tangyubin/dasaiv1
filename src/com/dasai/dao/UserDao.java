@@ -66,4 +66,5 @@ public interface UserDao {
 	 * @return 邮箱为email的User集合
 	 */
 	List<User> findByEmail(String email);
+	List<User> findByUsernameOrEmail(String usernameOrEmail);
 }

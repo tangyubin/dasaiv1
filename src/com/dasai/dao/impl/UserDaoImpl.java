@@ -64,4 +64,10 @@ public class UserDaoImpl extends TangYuBinHibernateDaoSupport implements
 		return (List<User>)getHibernateTemplate()
 				.find("from User where email = ?", new String[] {email});
 	}
+
+	@Override
+	public List<User> findByUsernameOrEmail(String usernameOrEmail) {
+		return (List<User>)getHibernateTemplate()
+				.find("from User where username = ? or email = ?", new String[] {usernameOrEmail, usernameOrEmail});
+	}
 }

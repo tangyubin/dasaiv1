@@ -109,30 +109,38 @@
 				</table>
 			</div>
 			<div class="col-md-9" id="workSub">
+				<form action="student/submitWork.action" method="post" enctype="multipart/form-data">
 				<div class="form-group">
 				    <label for="inputEmail3" class="col-md-2 control-label">作品名称</label>
 				    <div class="col-md-10">
-				      <input type="text" class="form-control opacity" id="inputEmail3" placeholder="">
+				      <input type="text" name="title" class="form-control opacity" id="inputEmail3" placeholder=""/>
 				    </div>
 				  </div>
 				  <br>
 				  <div class="form-group" style="margin-top:10px;">
-				    <label for="inputEmail3" class="col-md-2 control-label">作品描述</label>
+				    <label for="inputEmail3" class="col-md-2 control-label">作品类型</label>
 				    <div class="col-md-10">
-				      <textarea class="form-control opacity" rows="3"></textarea>
+				      	<select name="workType">
+				      		<option>==选择作品类型==</option>
+				      		<option>A</option>
+				      		<option>B</option>
+				      		<option>C</option>
+				      		<option>D</option>
+				      	</select>
 				    </div>
 				  </div>
 				  <br>
 				  <div class="form-group"  style="margin-top:60px;">
 				    <label for="inputEmail3" class="col-md-2 control-label">文件</label>
 				    <div class="col-md-10">
-				      <input type="file" class="form-control opacity">
+				      <input type="file" name="upload" class="form-control opacity"/>
 				    </div>
 				  </div>
 				  <div class="col-md-6 col-md-offset-2" style="margin-top:10px;">
-				  	<input type="button" class="btn btn-info" value="提交" id="submit">
-
+				  	<input type="submit" class="btn btn-info" value="提交" id="submit"/>
+					
 				  </div>
+				  </form>
 			</div>
 
 		</div>

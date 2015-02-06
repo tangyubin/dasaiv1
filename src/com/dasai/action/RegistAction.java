@@ -2,6 +2,7 @@ package com.dasai.action;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import com.dasai.action.base.UserBaseAction;
 import com.dasai.service.UserManager;
 import com.dasai.vo.UserBean;
@@ -9,10 +10,13 @@ import com.opensymphony.xwork2.ActionContext;
 
 public class RegistAction extends UserBaseAction {
 	private static final long serialVersionUID = 1L;
-	private final String STUDENT_REGIST_RESULT = "student";
-	private final String TEAM_REGIST_RESULT = "team";
-	private final String TEACHER_REGIST_RESULT = "teacher";
-	private final String ADMIN_REGIST_RESULT = "admin";
+	private final Map<Integer, String> resultMap = new HashMap<Integer, String>() {
+		{
+			put(UserBean.USER_TYPE_ADMIN, "admin");
+			put(UserBean.USER_TYPE_TEACHER, "teacher");
+			put(UserBean.USER_TYPE_STUDENT, "student");
+		}
+	};
 	private final String REGIST_FAIL = "fail";
 	private String username;
 	private String password;
@@ -53,7 +57,7 @@ public class RegistAction extends UserBaseAction {
 	}
 	public String validUsername() {
 		this.dataMap = new HashMap<String, Object>();
-		if(userManager.validUsername(this.getUsername()) == UserManager.NOT_FOUND) {
+		if(userManager.validUsername(this.getUsername())) {
 			dataMap.put("status", "20000");
 		}else {
 			dataMap.put("status", "10003");
@@ -62,7 +66,7 @@ public class RegistAction extends UserBaseAction {
 	}
 	public String validEmail() {
 		this.dataMap = new HashMap<String, Object>();
-		if(userManager.validEmail(this.getEmail()) == UserManager.NOT_FOUND) {
+		if(userManager.validEmail(this.getEmail())) {
 			dataMap.put("status", "20000");
 		}else {
 			dataMap.put("status", "10003");
@@ -75,24 +79,11 @@ public class RegistAction extends UserBaseAction {
 		}
 		System.out.println("hello");
 		ActionContext ctx = ActionContext.getContext();
-		UserBean user = new UserBean(username, password, email, userType);
-		int result = userManager.validRegist(user);
-		if(result == userManager.USER_TYPE_STUDENT) {
-			ctx.getSession().put(WebConstant.USERNAME_OR_EMAIL, username);
-			ctx.getSession().put(WebConstant.LEVEL, WebConstant.STUDENT_LEVEL);
-			return STUDENT_REGIST_RESULT;
-		}else if(result == userManager.USER_TYPE_TEAM) {
-			ctx.getSession().put(WebConstant.USERNAME_OR_EMAIL, username);
-			ctx.getSession().put(WebConstant.LEVEL, WebConstant.TEAM_LEVEL);
-			return TEAM_REGIST_RESULT;
-		}else if(result == userManager.USER_TYPE_TEACHER) {
-			ctx.getSession().put(WebConstant.USERNAME_OR_EMAIL, username);
-			ctx.getSession().put(WebConstant.LEVEL, WebConstant.TEACHER_LEVEL);
-			return TEACHER_REGIST_RESULT;
-		}else if(result == userManager.USER_TYPE_ADMIN) {
-			ctx.getSession().put(WebConstant.USERNAME_OR_EMAIL, username);
-			ctx.getSession().put(WebConstant.LEVEL, WebConstant.ADMIN_LEVEL);
-			return ADMIN_REGIST_RESULT;
+		UserBean userBean = new UserBean(username, password, email, userType);
+		if(userManager.validRegist(userBean)) {
+			ctx.getSession().put("username", userBean.getUsername());
+			ctx.getSession().put("userType", userBean.getUserType());
+			return resultMap.get(userBean.getUserType());
 		}else {
 			return REGIST_FAIL;
 		}

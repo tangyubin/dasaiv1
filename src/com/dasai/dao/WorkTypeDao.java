@@ -40,4 +40,5 @@ public interface WorkTypeDao {
 	 * @return
 	 */
 	List<WorkType> findAll();
+	List<WorkType> findByName(String name);
 }
