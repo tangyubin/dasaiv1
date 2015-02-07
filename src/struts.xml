@@ -107,7 +107,7 @@
 					image/bmp,image/png,image/gif,image/jpeg,zip,doc,rar
 				</param>
 				<!-- 配置允许上传的文件大小 -->
-				<param name="maximumSize">300000</param>
+				<!-- <param name="maximumSize">300000</param> -->
 			</interceptor-ref>
 			<interceptor-ref name="defaultStack"/>
 			<!-- 动态设置Action的属性值 -->
@@ -116,7 +116,7 @@
 				<param name="root">dataMap</param>
 			</result> -->
 			<result name="success">
-				index.jsp
+				/index.jsp
 			</result>
 			<result name="input">/WEB-INF/jsp/error.jsp</result>
 		</action>

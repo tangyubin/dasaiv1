@@ -108,7 +108,9 @@
     <bean id="userManager"
 		class="com.dasai.service.impl.UserManagerImpl"
 		parent="managerTemplate"/>
-	
+	<bean id="studentManager"
+		class="com.dasai.service.impl.StudentManagerImpl"
+		parent="managerTemplate"/>
 	
 	<!-- ================================================================ -->
 	<!-- 配置Dao层组件 -->
