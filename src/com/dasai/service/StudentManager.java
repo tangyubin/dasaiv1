@@ -7,4 +7,5 @@ public interface StudentManager {
 	StudentBean getStudentBean(String username);
 	void saveStudentBean(String username, StudentBean studentBean);
 	void addWork(WorkBean workBean);
+	boolean updateStudentInfo(StudentBean studentBean);
 }

@@ -12,10 +12,10 @@ public class UserBean {
 	/**
 	 * 0代表用户类型为学生；1代表用户类型为团队
 	 */
-	public static final int USER_TYPE_STUDENT = 0;
-	public static final int USER_TYPE_TEAM = 1;
-	public static final int USER_TYPE_TEACHER = 2;
-	public static final int USER_TYPE_ADMIN = 3;
+	public static final int USER_TYPE_STUDENT = 1;
+	public static final int USER_TYPE_TEAM = 2;
+	public static final int USER_TYPE_TEACHER = 3;
+	public static final int USER_TYPE_ADMIN = 4;
 	
 	private String username;
 	private String password;
@@ -32,7 +32,7 @@ public class UserBean {
 		this.username = username;
 		this.password = password;
 		this.email = email;
-		if(userType.equals("学生")) {
+		if(userType.equals("1")) {
 			this.userType = USER_TYPE_STUDENT;
 		}else {
 			this.userType = USER_TYPE_TEAM;
@@ -63,7 +63,7 @@ public class UserBean {
 		this.userType = userType;
 	}
 	public void setUserType(String userType) {
-		if(userType.equals("学生")) {
+		if(userType.equals("1")) {
 			this.userType = USER_TYPE_STUDENT;
 		}else {
 			this.userType = USER_TYPE_TEAM;

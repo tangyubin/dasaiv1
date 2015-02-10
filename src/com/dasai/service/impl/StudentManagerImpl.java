@@ -144,4 +144,18 @@ public class StudentManagerImpl implements StudentManager {
 		work.setTitle(workBean.getTitle());
 		workDao.save(work);
 	}
+
+	@Override
+	public boolean updateStudentInfo(StudentBean studentBean) {
+		Student student = studentDao.findByUsername(studentBean.getUsername()).get(0);
+		student.setName(studentBean.getName());
+		student.setStudentId(studentBean.getStudentId());
+		student.setCollege(studentBean.getCollege());
+		student.setGrade(studentBean.getGrade());
+		student.setTel(studentBean.getTel());
+		student.setBankCardId(studentBean.getBankCardId());
+		student.setOtherInfo(studentBean.getOtherInfo());
+		studentDao.save(student);
+		return true;
+	}
 }

@@ -1,6 +1,7 @@
 package com.dasai.vo;
 
 public class StudentBean {
+	private String username;
 	private String name;
 	private String tel;
 	private String studentId;
@@ -10,6 +11,13 @@ public class StudentBean {
 	private String otherInfo;
 	private String experienceText;
 	
+	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	public String getName() {
 		return name;
 	}

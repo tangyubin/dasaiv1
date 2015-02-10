@@ -1,0 +1,66 @@
+/**
+ * Created by tangyubin-pc on 2015/2/8.
+ */
+$(document).ready(function(){
+    $("#testInfoBtn").click(function(){
+        $("#testInfo").show();
+        $("#personInfo").hide();
+        $("#workInfo").hide();
+        $("#workSub").hide();
+        $("#experienceText").hide();
+        $("#testInfoBtn").addClass("activeclass");
+        $("#personInfoBtn").removeClass("activeclass");
+        $("#workInfoBtn").removeClass("activeclass");
+        $("#workSubBtn").removeClass("activeclass");
+        $('#experienceTextBtn').removeClass("activeclass");
+    });
+    $("#personInfoBtn").click(function(){
+        $("#personInfo").show();
+        $("#testInfo").hide();
+        $("#workInfo").hide();
+        $("#workSub").hide();
+        $("#experienceText").hide();
+        $("#personInfoBtn" ).addClass("activeclass");
+        $("#testInfoBtn").removeClass("activeclass");
+        $("#workInfoBtn").removeClass("activeclass");
+        $("#workSubBtn").removeClass("activeclass");
+        $('#experienceTextBtn').removeClass("activeclass");
+    });
+    $("#workInfoBtn").click(function(){
+        $("#personInfo").hide();
+        $("#testInfo").hide();
+        $("#workInfo").show();
+        $("#workSub").hide();
+        $("#experienceText").hide();
+        $("#personInfoBtn").removeClass("activeclass");
+        $("#testInfoBtn").removeClass("activeclass");
+        $("#workInfoBtn").addClass("activeclass");
+        $("#workSubBtn").removeClass("activeclass");
+        $('#experienceTextBtn').removeClass("activeclass");
+    });
+    $("#workSubBtn").click(function(){
+        $("#personInfo").hide();
+        $("#testInfo").hide();
+        $("#workInfo").hide();
+        $("#experienceText").hide();
+        $("#workSub").show();
+        $("#personInfoBtn").removeClass("activeclass");
+        $("#testInfoBtn").removeClass("activeclass");
+        $("#workInfoBtn").removeClass("activeclass");
+        $("#workSubBtn").addClass("activeclass");
+        $('#experienceTextBtn').removeClass("activeclass");
+    });
+    $("#experienceTextBtn").click(function(){
+        $("#personInfo").hide();
+        $("#testInfo").hide();
+        $("#workInfo").hide();
+        $("#experienceText").show();
+        $("#workSub").hide();
+        $("#personInfoBtn").removeClass("activeclass");
+        $("#testInfoBtn").removeClass("activeclass");
+        $("#workInfoBtn").removeClass("activeclass");
+        $("#workSubBtn").removeClass("activeclass");
+        $('#experienceTextBtn').addClass("activeclass");
+    });
+    $("#testInfoBtn").click();
+});

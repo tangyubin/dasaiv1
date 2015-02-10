@@ -56,12 +56,12 @@ body{
 .nav li a:focus{
     background-color: rgba(30, 30, 30, 0.8);
 }
-/*定义导航条底部外边距为40px，颜色为黑色，透明度为0.3*/
+/*瀹氫箟瀵艰埅鏉″簳閮ㄥ杈硅窛涓�0px锛岄鑹蹭负榛戣壊锛岄�鏄庡害涓�.3*/
 .navbar-my{
     background-color:rgba(0,0,0,.3);
     margin-bottom: 40px;
 }
-/*定义导航链接的布局方式*/
+/*瀹氫箟瀵艰埅閾炬帴鐨勫竷灞�柟寮�/
 .navbar-nav{
     margin: 0 auto;
     display: table;
@@ -88,7 +88,7 @@ body{
     background-color:rgba(0,0,0,.5)
 }
 .reg-tips{
-    color: green;
+    color: blue;
     /*background-color:rgba(0, 0, 0, .4);*/
 }
 .reg-err{

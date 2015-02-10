@@ -11,6 +11,7 @@ import org.apache.struts2.ServletActionContext;
 
 import com.dasai.action.base.StudentBaseAction;
 import com.dasai.service.StudentManager;
+import com.dasai.vo.StudentBean;
 import com.dasai.vo.WorkBean;
 import com.opensymphony.xwork2.ActionContext;
 
@@ -109,5 +110,32 @@ public class StudentAction extends StudentBaseAction {
 		dataMap = new HashMap<String, Object>();
 		dataMap.put("status", "20000");
 		return SUCCESS;
+	}
+	private String name;
+	private String studentId;
+	private String college;
+	private String grade;
+	private String tel;
+	private String bankCardId;
+	private String otherInfo;
+	
+	public String updateStudentInfo() throws Exception{
+		ActionContext ctx = ActionContext.getContext();
+		String username = (String)ctx.getSession().get("userType");
+		StudentBean studentBean = new StudentBean();
+		studentBean.setUsername(username);
+		studentBean.setName(name);
+		studentBean.setStudentId(studentId);
+		studentBean.setCollege(college);
+		studentBean.setGrade(grade);
+		studentBean.setTel(tel);
+		studentBean.setBankCardId(bankCardId);
+		studentBean.setOtherInfo(otherInfo);
+		if(studentManager.updateStudentInfo(studentBean)) {
+			this.dataMap.put("status", "20000");
+		}else {
+			this.dataMap.put("status", "10003");
+		}
+		return "success";
 	}
 }

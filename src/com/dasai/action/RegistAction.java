@@ -15,6 +15,7 @@ public class RegistAction extends UserBaseAction {
 			put(UserBean.USER_TYPE_ADMIN, "admin");
 			put(UserBean.USER_TYPE_TEACHER, "teacher");
 			put(UserBean.USER_TYPE_STUDENT, "student");
+			put(UserBean.USER_TYPE_TEAM, "team");
 		}
 	};
 	private final String REGIST_FAIL = "fail";
@@ -83,7 +84,8 @@ public class RegistAction extends UserBaseAction {
 		if(userManager.validRegist(userBean)) {
 			ctx.getSession().put("username", userBean.getUsername());
 			ctx.getSession().put("userType", userBean.getUserType());
-			return resultMap.get(userBean.getUserType());
+			String result = resultMap.get(userBean.getUserType());
+			return result;
 		}else {
 			return REGIST_FAIL;
 		}

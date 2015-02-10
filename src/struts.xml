@@ -112,13 +112,15 @@
 			<interceptor-ref name="defaultStack"/>
 			<!-- 动态设置Action的属性值 -->
 			<param name="savePath">/WEB-INF/upload</param>
-			<!-- <result name="success" type="json">
+			<result name="success" type="json">
 				<param name="root">dataMap</param>
-			</result> -->
-			<result name="success">
-				/index.jsp
 			</result>
 			<result name="input">/WEB-INF/jsp/error.jsp</result>
+		</action>
+		<action name="updateStudentInfo" class="com.dasai.action.StudentAction" method="updateStudentInfo">
+			<result name="success" type="json">
+				<param name="root">dataMap</param>
+			</result>
 		</action>
 	</package>
 </struts>

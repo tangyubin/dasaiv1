@@ -1,52 +1,7 @@
 body{
     background-image: url(../image/bg.jpg);
 }
-.container{
-    margin-top: 30px;
-    color: white;
-}
-.registBox{
-    /*border: 1px solid white;*/
-    margin-top: 20px;
-    height: 450px;
-    background-color: rgba(0,0,0,.3);
-}
-.box-head{
-    margin-top: 20px;
-    margin-bottom: 30px;
-    text-align: center;
-    font-size: large;
-}
-.box-footer{
-    margin-top: 20px;
-    text-align: center;
-    color: white;
-}
-.box-footer a{
-    color: red;
-    font-size: larger;
-}
-.opacity{
-    background-color: rgba(0,0,0,.3);
-    color: white;
-    /*background-color:#000;
-    opacity:0.5;
-    filter:alpha(opacity=50);*/
-}
 
-.logo{
-    line-height: 60px;
-    font-size: 18px;
-    color: green;
-}
-.name{
-    color: white;
-    padding-left: 10px;
-}
-.name:hover{
-    color: red;
-    text-decoration: none;
-}
 .nav li a{
     color: #da6426;
     margin-top: 2px;
@@ -87,10 +42,64 @@ body{
     color:#fff;
     background-color:rgba(0,0,0,.5)
 }
-.reg-tips{
-    color: green;
-    /*background-color:rgba(0, 0, 0, .4);*/
+
+.opacity{
+    background-color: rgba(0,0,0,.3);
+    color: white;
+    /*background-color:#000;
+    opacity:0.5;
+    filter:alpha(opacity=50);*/
 }
-.reg-err{
+.activeclass{
+    background-color: rgba(30,30,30,.8);
+    /*border: 1px solid gray;*/
+}
+
+.contentArea{
+    /*border: 1px solid white;*/
+    height: 300px;
+    background-color: rgba(0,0,0,.3);
+}
+
+
+.container{
+    margin-top: 30px;
+    color: white;
+}
+
+#submit{
+    width: 100px;
+    height: 40px;
+}
+
+.table td {
+    height: 30px;
+    color: #da6426;
+    margin-top: 2px;
+    padding: 10px 10px;
+}
+.table td:hover
+{
+    background-color: rgba(30,30,30,.5);
+    cursor: pointer;
+}
+
+.logo{
+    line-height: 60px;
+    font-size: 18px;
+    color: green;
+}
+.name{
+    color: white;
+    padding-left: 10px;
+}
+.name:hover{
     color: red;
+    text-decoration: none;
+}
+
+.tips{
+    color: red;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

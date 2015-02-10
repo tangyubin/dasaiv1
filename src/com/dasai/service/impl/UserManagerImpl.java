@@ -188,6 +188,21 @@ public class UserManagerImpl implements UserManager {
 	@Override
 	public boolean validRegist(UserBean userBean) {
 		if(validUsername(userBean.getUsername()) && validEmail(userBean.getEmail())) {
+			if(userBean.getUserType() == UserBean.USER_TYPE_STUDENT){
+				Student student = new Student();
+				student.setUsername(userBean.getUsername());
+				student.setPassword(userBean.getPassword());
+				student.setEmail(userBean.getEmail());
+				student.setEmailCheckback(false);
+				studentDao.save(student);
+			}else{
+				Team team = new Team();
+				team.setUsername(userBean.getUsername());
+				team.setPassword(userBean.getPassword());
+				team.setEmail(userBean.getEmail());
+				team.setEmailCheckback(false);
+				teamDao.save(team);
+			}
 			return true;
 		}else {
 			return false;
